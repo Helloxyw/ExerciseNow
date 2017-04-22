@@ -3,7 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<
 <mapper namespace="com.en.dao.UserDao">
 	<resultMap type="User" id="userResult">
 		<id property="id" column="id"></id>
@@ -12,13 +11,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="phoneNum" column="phoneNum"></result>
 	</resultMap>
 
+	<select id="countUsername" parameterType="User" resultType="Long">
+		SELECT count(*)from t_user where username = #{username}
+	</select>
+
+	<select id="getByUsernameAndPass" parameterType="User" resultMap="userResult">
+		SELECT * FROM t_user where username=#{username} and password=#{password}
+	</select>
+
 	<select id="getById" parameterType="Integer" resultMap="userResult">
-		SELECT * FROM t_user where id=#{id}
+		SELECT *
+		FROM t_user where id=#{id}
 	</select>
 
 	<insert id="addUser" parameterType="User">
 		INSERT into t_user
-		VALUES(null,#{usename},#{password},#{phoneNum})
+		VALUES(null,#{username},#{password},#{phoneNum})
 	</insert>
 
 	<delete id="deleteUser" parameterType="User">

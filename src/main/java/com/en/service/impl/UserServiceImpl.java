@@ -38,4 +38,16 @@ public class UserServiceImpl implements UserService{
 		return userDao.deleteUser(user);
 	}
 
+	@Override
+	public User getByUsernameAndPass(User user) {
+		// TODO Auto-generated method stub
+		return userDao.getByUsernameAndPass(user);
+	}
+
+	@Override
+	public Long countUsername(User user) {
+		// TODO Auto-generated method stub
+		return userDao.countUsername(user);
+	}
+
 }
