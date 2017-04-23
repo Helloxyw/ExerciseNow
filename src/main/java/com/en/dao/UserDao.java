@@ -1,5 +1,7 @@
 package com.en.dao;
 
+import java.util.List;
+
 import com.en.entity.User;
 
 public interface UserDao {
@@ -15,4 +17,6 @@ public interface UserDao {
 	public User getByUsernameAndPass(User user);
 
 	public Long countUsername(User user);
+
+	public List<User> getUserSort();
 }

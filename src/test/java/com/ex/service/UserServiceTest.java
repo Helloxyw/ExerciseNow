@@ -1,5 +1,7 @@
 package com.ex.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -21,20 +23,31 @@ public class UserServiceTest {
 	
 	@Resource
 	public UserService userService;
+	
+	@Test
+	public void testSort(){
+		List<User> userList = userService.getUserSort();
+		for (User user : userList) {
+			System.out.println("名字:"+user.getUsername()+"   分数:"+user.getScore());
+		}
+	}
+	
 	@Test
 	public void testAddUser(){
 		User user = new User();
-		user.setUsername("小明");
-		user.setPassword("xm123");
-		user.setPhoneNum("12345678910");
+		user.setUsername("Link");
+		user.setPassword("Link123");
+		user.setPhoneNum("177567341");
 		userDao.addUser(user);
 	}
 	
 	@Test
 	public void testSelectUser(){
-		Integer id = 2;
+		Integer id = 7;
 		User user = userService.getById(id);
-		user.setPhoneNum("10010");
+		//user.setPhoneNum("12345652789");
+		//user.setUsername("孙权");
+		user.setScore(1000);
 		userService.updateUser(user);
 	}
 	

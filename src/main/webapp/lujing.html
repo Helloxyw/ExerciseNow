@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>递归转换经纬度并显示轨迹</title>
+		<style type="text/css">
+			html {
+				height: 100%
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+			
+			#map_container {
+				height: 100%
+			}
+		</style>
+
+		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=Z406k82C5Wz2RewzOwNGXIh9VbdvsWrW"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				// 新建地图，并初始化设置
+				var map = new BMap.Map("map_container");
+				map.centerAndZoom(new BMap.Point(0, 0), 8);
+				map.enableScrollWheelZoom();
+				// 新建折线，并加入地图中
+				var polyline = new BMap.Polyline([], {
+					strokeColor: "blue",
+					strokeWeight: 4,
+					strokeOpacity: 0.4
+				});
+				map.addOverlay(polyline);
+				// 新建标记，并加入地图中
+				var marker = new BMap.Marker(new BMap.Point(0, 0));
+				map.addOverlay(marker);
+				// 新建label，并加入标记中
+				var label = new BMap.Label("0", {
+					offset: new BMap.Size(0, -20)
+				});
+				marker.setLabel(label);
+				// 新建经纬度转换对象
+				var convertor = new BMap.Convertor();
+				// 加载经纬度数据，一边转换到百度坐标，一边绘制折线
+				$.get("longlat.json",
+					function(rawData) {
+						var translatedPoints = [];
+
+						// 回调函数
+						function translateCallback(returnedData) {
+							if (returnedData.status == 0) {
+								// 收集转换之后的坐标，并调整地图显示
+								translatedPoints = translatedPoints.concat(returnedData.points);
+								map.panTo(translatedPoints[translatedPoints.length - 1]);
+								polyline.setPath(translatedPoints);
+								marker.setPosition(translatedPoints[translatedPoints.length - 1]);
+								label.setContent(translatedPoints.length);
+								// 递归地转换坐标，防止接收数据错乱
+								var gps = rawData.shift();
+								if (gps != undefined) {
+									// 限制每秒转换次数，否则有可能超出百度地图的并发请求限制频率
+									setTimeout(function() {
+										var point = new BMap.Point(gps.longitude, gps.latitude);
+										convertor.translate(new Array(point), 1, 5, translateCallback);
+									}, 10);
+								}
+							} else {
+								alert("转换出错: " + returnedData.status);
+							}
+						}
+						
+						// 首次转换，将触发递归转换链
+						var gps = rawData.shift();
+						if (gps != undefined) {
+							var point = new BMap.Point(gps.longitude, gps.latitude);
+							convertor.translate(new Array(point), 1, 5, translateCallback);
+						}
+					},
+					"json"
+				);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="map_container"></div>
+	</body>
+
+</html>

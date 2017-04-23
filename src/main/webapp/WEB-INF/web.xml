@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>ExerciseNow</display-name>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>a.jsp</welcome-file>
 	</welcome-file-list>
 
 	<context-param>
@@ -13,6 +13,21 @@
 		<param-value>classpath:spring/spring-*.xml</param-value>
 	</context-param>
 
+
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<!-- 配置DispatcherServlet -->
 	<servlet>

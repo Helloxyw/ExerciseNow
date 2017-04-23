@@ -1,5 +1,7 @@
 package com.en.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -48,6 +50,12 @@ public class UserServiceImpl implements UserService{
 	public Long countUsername(User user) {
 		// TODO Auto-generated method stub
 		return userDao.countUsername(user);
+	}
+
+	@Override
+	public List<User> getUserSort() {
+		// TODO Auto-generated method stub
+		return userDao.getUserSort();
 	}
 
 }

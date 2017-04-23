@@ -2,6 +2,7 @@ package com.en.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,28 +19,35 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping("/login")
-	public String login(User user, HttpServletRequest request) {
+	public ModelAndView login(User user, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		System.out.println(user.getUsername());
 		User loginUser = userService.getByUsernameAndPass(user);
 		if (loginUser != null) {
 			System.out.println(loginUser);
-			request.setAttribute("loginUser", loginUser);
-			return "redirect:/main.jsp";
+			modelAndView.setViewName("UserMain");
+			modelAndView.addObject("loginUser", loginUser);
+//			request.setAttribute("loginUser", loginUser);
+//			request.setAttribute("errodInfo",null);
+			return modelAndView;
 		} else {
-			request.setAttribute("errorInfo", "用户名或密码错误");
-			return "login.jsp";
+//			request.setAttribute("errorInfo", "用户名或密码错误");
+			modelAndView.addObject("errorInfo","用户名或密码错误");
+			modelAndView.setViewName("login");
+			return modelAndView;
 		}
 	}
 	
 	@RequestMapping("/register")
-	public String register(User user,HttpServletRequest request){
+	public String register(User user,HttpServletRequest request,HttpServletResponse response){
 		
 		//判断是否重名
 		if(userService.countUsername(user)>0){
 			request.setAttribute("errorInfo", "用户名已注册");
-			return "register.jsp";
+			return "register";
 		}
-		request.setAttribute("successInfo", "注册成功");
 		userService.addUser(user);
-		return "login.jsp";
+		request.setAttribute("errorInfo","注册成功，请登录");
+		return "login";
 	}
 }

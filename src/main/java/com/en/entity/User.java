@@ -6,8 +6,16 @@ public class User {
 	private String username;
 	private String password;
 	private String phoneNum;
+	private Integer score;
 	
 	
+	
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
+	}
 	public Integer getId() {
 		return id;
 	}

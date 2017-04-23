@@ -9,7 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="username" column="username"></result>
 		<result property="password" column="password"></result>
 		<result property="phoneNum" column="phoneNum"></result>
+		<result property="score" column="score"></result>
 	</resultMap>
+
+	<select id="getUserSort" resultMap="userResult">
+		SELECT * FROM t_user ORDER BY score DESC limit 0,5
+	</select>
 
 	<select id="countUsername" parameterType="User" resultType="Long">
 		SELECT count(*)from t_user where username = #{username}
@@ -26,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="addUser" parameterType="User">
 		INSERT into t_user
-		VALUES(null,#{username},#{password},#{phoneNum})
+		VALUES(null,#{username},#{password},#{phoneNum},0)
 	</insert>
 
 	<delete id="deleteUser" parameterType="User">
@@ -44,8 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				password=#{password},
 			</if>
 			<if test="phoneNum!=null and phoneNum!=''">
-				phoneNum=#{phoneNum}
+				phoneNum=#{phoneNum},
+			</if>
+			<if test="score!=null" >
+				score=#{score}
 			</if>
 		</set>
+		where id=#{id}
 	</update>
+	
 </mapper>

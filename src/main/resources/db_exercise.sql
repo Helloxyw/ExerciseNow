@@ -9,6 +9,7 @@ CREATE TABLE `t_user` (
   `username` VARCHAR(50) NOT NULL COMMENT '用户姓名',
   `password` VARCHAR(100) NOT NULL COMMENT '用户密码',
   `phoneNum` VARCHAR(20) NOT NULL COMMENT '用户号码',
+  `score` INT(11) COMMENT '积分',
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
