@@ -77,7 +77,7 @@
 								<li>
 									<a href="${pageContext.request.contextPath}/classes.jsp" class="fh5co-sub-ddown">课程</a>
 								
-								</li>
+							</li>
 								<li>
 									<a href="${pageContext.request.contextPath}/schedule.jsp">任务</a>
 								</li>
@@ -513,7 +513,7 @@
 							<a href="#" class="btn btn-default">逛一逛</a>
 						</div>
 					</div>
-
+				
 					<div class="col-md-3 animate-box">
 						<div class="price-box animate-box">
 							<h2 class="pricing-plan">足球用品</h2>
@@ -521,7 +521,6 @@
 							<a href="#" class="btn btn-default">逛一逛</a>
 						</div>
 					</div>
-
 					<div class="col-md-3 animate-box">
 						<div class="price-box animate-box popular">
 							<h2 class="pricing-plan pricing-plan-offer">乒乓球用品<span>

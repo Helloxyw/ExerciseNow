@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<nav id="fh5co-menu-wrap" role="navigation">
 							<ul class="sf-menu" id="fh5co-primary-menu">
 								<li>
-									<a href="index.jsp">主页</a>
+									<a href="${pageContext.request.contextPath}/index.do">主页</a>
 								</li>
 								<li>
 									<a href="classes.jsp" class="fh5co-sub-ddown">课程</a>
